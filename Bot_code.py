@@ -6,14 +6,12 @@ import requests
 import wikipedia
 import faiss
 
-from transformers import GPTNeoForCausalLM, GPT2Tokenizer
 from sentence_transformers import SentenceTransformer
 from sklearn.preprocessing import normalize
-from langchain_experimental.agents.agent_toolkits import create_csv_agent
 from langchain_groq import ChatGroq
 from google import genai
 from google.genai import types
-from pydantic import Field, root_validator
+from pydantic import Field 
 
 from langchain.llms.base import LLM
 from langchain.schema import Document, BaseRetriever
@@ -21,14 +19,11 @@ from langchain.memory import ConversationBufferMemory
 from langchain.chains import ConversationalRetrievalChain
 from langchain.prompts import PromptTemplate
 
-from bs4 import BeautifulSoup
-
-os.environ["GENIE_API_KEY"] = "AIzaSyAnLPoWhFRTMkjyfdcgY7O63nEDxV69o3U"
-os.environ["OPENAI_API_KEY"] = "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"
-
+os.environ["GENIE_API_KEY"] = "APIkey"
+os.environ["OPENAI_API_KEY"] = "APIkey"
 client = genai.Client(api_key=os.environ["GENIE_API_KEY"])
 
-YELP_API_KEY = "ItveAvxU-IMKPhHy4YLIDHq2dinOrOeOj37KBuTMMjZs_iGU3RlqEr5tAbXpzD7EpCKu1ByjbRjzULUwBvUAZhqZgaZoXom5WWoC6sl3WDmMmIKj-Z4FQ4KBI9-3Z3Yx"
+YELP_API_KEY = "APIkey"
 BASE_URL = "https://api.yelp.com/v3"
 
 HEADERS = {
@@ -38,14 +33,13 @@ HEADERS = {
 
 nlp = spacy.load("en_core_web_sm")
 
-groq_api = "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"
+groq_api = "API"
 llm_groq = ChatGroq(temperature=0, model="llama3-70b-8192", api_key=groq_api)
 
-csv_file_path = "/Users/rajeev/Documents/MenuAI/Sample_Ingredients_File.csv"
-df_excel = pd.read_excel("/Users/rajeev/Downloads/Sample_Ingredients_File.xlsx")
+csv_file_path = "/Sample_Ingredients_File.csv"
+df_excel = pd.read_excel("/Sample_Ingredients_File.xlsx")
 df_excel.to_csv(csv_file_path, index=False)
 
-# agent = create_csv_agent(llm_groq, csv_file_path, verbose=False, allow_dangerous_code=True)
 model = SentenceTransformer("paraphrase-MiniLM-L6-v2")
 
 ingredient_texts = []
@@ -65,8 +59,6 @@ index = faiss.IndexFlatL2(dimension)
 normalized_embeddings = normalize(embeddings_np, axis=1, norm="l2")
 index.add(normalized_embeddings)
 
-print(f"FAISS (Restaurant) index trained: {index.is_trained}")
-print(f"Items in (Restaurant) index: {index.ntotal}")
 
 def search_businesses(keyword, location, limit=5):
     """
@@ -97,12 +89,12 @@ def search_businesses(keyword, location, limit=5):
         url = business.get("url", "")
 
         business_info = (
-            f"📌 *{name}*\n"
-            f"⭐ Rating: {rating}/5\n"
-            f"💰 Price: {price}\n"
-            f"📍 Address: {address}\n"
-            f"🔗 [Yelp Page]({url})\n\n"
-            f"💬 *Recent Reviews:*\n{get_reviews(business_id)}"
+            f"*{name}*\n"
+            f"Rating: {rating}/5\n"
+            f"Price: {price}\n"
+            f"Address: {address}\n"
+            f"[Yelp Page]({url})\n\n"
+            f"*Recent Reviews:*\n{get_reviews(business_id)}"
         )
         results.append(business_info)
     return "\n\n".join(results)
@@ -124,7 +116,7 @@ def get_reviews(business_id):
         user = review.get("user", {}).get("name", "Anonymous")
         text = review.get("text", "No review text available.")
         rating = review.get("rating", "N/A")
-        review_text = f"📝 *{user}* (⭐ {rating}/5): {text}"
+        review_text = f"📝 *{user}* ({rating}/5): {text}"
         formatted_reviews.append(review_text)
     return "\n".join(formatted_reviews)
 
@@ -150,9 +142,9 @@ def compare_average_price(category1, category2, location):
     avg_price2 = sum(len(p) for p in prices_cat2) / len(prices_cat2)
 
     return (
-        f"📊 *Price Comparison*\n\n"
-        f"🥦 *{category1.capitalize()} restaurants*: {'💲' * int(avg_price1)}\n"
-        f"🌮 *{category2.capitalize()} restaurants*: {'💲' * int(avg_price2)}"
+        f"*Price Comparison*\n\n"
+        f"*{category1.capitalize()} restaurants*: {'💲' * int(avg_price1)}\n"
+        f"*{category2.capitalize()} restaurants*: {'💲' * int(avg_price2)}"
     )
 
 def track_menu_trends(keyword, location):
@@ -174,10 +166,10 @@ def track_menu_trends(keyword, location):
         business_id = business.get("id")
         reviews = get_reviews(business_id)
         info = (
-            f"📌 *{business.get('name')}*\n"
-            f"📍 Address: {', '.join(business.get('location', {}).get('display_address', []))}\n"
-            f"🔗 [Yelp Page]({business.get('url')})\n\n"
-            f"💬 *Recent Mentions:*\n{reviews}"
+            f"*{business.get('name')}*\n"
+            f"Address: {', '.join(business.get('location', {}).get('display_address', []))}\n"
+            f"[Yelp Page]({business.get('url')})\n\n"
+            f"*Recent Mentions:*\n{reviews}"
         )
         results.append(info)
 
@@ -185,7 +177,6 @@ def track_menu_trends(keyword, location):
 
 def extract_nouns(query):
     doc = nlp(query)
-    relevant_nouns = [token.text for token in doc if token.pos_ == "NOUN"]
     relevant_noun_phrases = [np.text for np in doc.noun_chunks]
     return relevant_noun_phrases 
 
@@ -239,7 +230,6 @@ def fetch_wikipedia_summary(term):
         return f"Error retrieving Wikipedia: {str(e)}"
 
 
-
 def get_most_relevant_term(query, noun_phrases):
     """
     Calls Gemini to parse the query into 6 fields:
@@ -268,7 +258,6 @@ def get_most_relevant_term(query, noun_phrases):
         )
         response_text = response.text.strip()
 
-        # Basic parsing
         food_item = None
         location = None
         wiki_term = None
@@ -297,42 +286,11 @@ def get_most_relevant_term(query, noun_phrases):
         return None, None, None, None, None, None
 
 
-def create_references(wikipedia_data, faiss_retrieved_chunks, faiss_distances, langchain_data):
-    """
-    You can expand this to build a references string if needed.
-    """
-    return "References not fully implemented. (Customize in create_references.)"
-
-
-# def generate_response_with_gemini(retrieved_chunks, query, references):
+# def create_references(wikipedia_data, faiss_retrieved_chunks, faiss_distances, langchain_data):
 #     """
-#     Takes the combined context, appends to prompt, calls Gemini with it, 
-#     returns a final answer plus references.
+#     You can expand this to build a references string if needed.
 #     """
-#     prompt = f"""You are a Food Guide. The context below has information from a Faiss database, Wikipedia, and Yelp api.\n
-#     {retrieved_chunks}
-
-#     \nThis is the query: {query}
-
-#     Read the query and answer it based on the data you have above. """
-#     if not prompt.strip():
-#         raise ValueError("The prompt is empty. Ensure retrieved chunks are valid.")
-
-#     try:
-#         response = client.models.generate_content(
-#             model='gemini-2.0-flash',
-#             contents=prompt,
-#             config=types.GenerateContentConfig(
-#                 temperature=1.0,
-#                 top_p=0.99,
-#                 top_k=0,
-#                 max_output_tokens=500
-#             )
-#         )
-#         return f"{response.text}\n\nReferences:\n{references}"
-#     except Exception as e:
-#         print("Error during Gemini response generation:", e)
-#         return "Sorry, I couldn't generate a response based on the data."
+#     return "References not fully implemented. (Customize in create_references.)"
 
 
 def rag(query, k=5):
@@ -344,7 +302,7 @@ def rag(query, k=5):
     food, location, wikiterm, cat1, cat2, timeword = get_most_relevant_term(query, nouns)
     yelpdata = []
 
-    if food and location:
+    if food or location:
         restaurant_results = search_businesses(food, location)
         yelpdata.append(restaurant_results)
     if cat1 and cat2 and location:
@@ -361,13 +319,15 @@ def rag(query, k=5):
         query, index, wiki_index, k, wiki_texts
     )
 
+    # references = create_references(
+    #     wikipedia_data={wikiterm: noun_data}, 
+    #     faiss_retrieved_chunks=retrieved_chunks,
+    #     faiss_distances=faiss_distances,
+    #     langchain_data=retrieved_chunks
+    # )
+
     context = f"Context: {retrieved_chunks}.\n\nWikipedia Data: {noun_data}\n\nYelp Data: {yelpdata}"
-    references = create_references(
-        wikipedia_data={wikiterm: noun_data}, 
-        faiss_retrieved_chunks=retrieved_chunks,
-        faiss_distances=faiss_distances,
-        langchain_data=retrieved_chunks
-    )
+    
     return context
 
 
@@ -452,7 +412,7 @@ def build_conversational_chain():
 
         \nThis is the query: {question}
 
-        Read the query and answer it based on the data you have above. Check your answer twice. You have the data above, don't forget. 
+        Read the query and answer it based on the data you have above. Check your answer twice. You have the data above, don't forget. If there is no relevant data available, politely say that the data isn't sufficient.
             """
         )
 
