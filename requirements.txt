@@ -8,7 +8,6 @@ faiss-cpu
 sentence-transformers
 scikit-learn
 spacy
-en-core-web-sm
 langchain
 langchain-groq
 google
