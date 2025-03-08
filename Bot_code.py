@@ -41,9 +41,10 @@ HEADERS = {
 groq_api = "API"
 llm_groq = ChatGroq(temperature=0, model="llama3-70b-8192", api_key=groq_api)
 
-csv_file_path = "/Sample_Ingredients_File.csv"
-df_excel = pd.read_excel("/Sample_Ingredients_File.xlsx")
-df_excel.to_csv(csv_file_path, index=False)
+# csv_file_path = "/Sample_Ingredients_File.csv"
+# df_excel = pd.read_excel("/Sample_Ingredients_File.xlsx")
+# df_excel.to_csv(csv_file_path, index=False)
+df_excel = pd.read_csv("Sample_Ingredients_File.csv")
 
 model = SentenceTransformer("paraphrase-MiniLM-L6-v2")
 
