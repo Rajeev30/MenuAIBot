@@ -7,7 +7,7 @@ wikipedia
 faiss-cpu
 sentence-transformers
 scikit-learn
-spacy
+spacy == 3.0.0
 langchain
 langchain-groq
 google
