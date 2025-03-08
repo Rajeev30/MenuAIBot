@@ -7,9 +7,8 @@ wikipedia
 faiss-cpu
 sentence-transformers
 scikit-learn
-spacy==3.8.4
-thinc==8.3.4
-https://github.com/explosion/spacy-models/releases/download/en_core_web_sm-3.8.4/en_core_web_sm-3.8.4.tar.gz
+spacy
+en-core-web-sm
 langchain
 langchain-groq
 google
