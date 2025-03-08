@@ -19,11 +19,15 @@ from langchain.memory import ConversationBufferMemory
 from langchain.chains import ConversationalRetrievalChain
 from langchain.prompts import PromptTemplate
 
-os.environ["GENIE_API_KEY"] = "APIkey"
-os.environ["OPENAI_API_KEY"] = "APIkey"
+GENIE_API_KEY = os.getenv("GENIE_API_KEY")
+OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
+YELP_API_KEY = os.getenv("YELP_API_KEY")
+GROQ_API_KEY = os.getenv("GROQ_API_KEY")
+# os.environ["GENIE_API_KEY"] = "APIkey"
+# os.environ["OPENAI_API_KEY"] = "APIkey"
 client = genai.Client(api_key=os.environ["GENIE_API_KEY"])
 
-YELP_API_KEY = "APIkey"
+# YELP_API_KEY = "APIkey"
 BASE_URL = "https://api.yelp.com/v3"
 
 HEADERS = {
@@ -38,8 +42,8 @@ HEADERS = {
 
 #nlp = spacy.load("en_core_web_sm")
 
-groq_api = "API"
-llm_groq = ChatGroq(temperature=0, model="llama3-70b-8192", api_key=groq_api)
+# groq_api = "API"
+llm_groq = ChatGroq(temperature=0, model="llama3-70b-8192", api_key=GROQ_API_KEY)
 
 # csv_file_path = "/Sample_Ingredients_File.csv"
 # df_excel = pd.read_excel("/Sample_Ingredients_File.xlsx")
