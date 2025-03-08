@@ -30,8 +30,8 @@ HEADERS = {
     "Authorization": f"Bearer {YELP_API_KEY}",
     "Content-Type": "application/json"
 }
-os.system("pip install --upgrade pip")
-os.system("python -m spacy download en_core_web_sm")
+#os.system("pip install --upgrade pip")
+#os.system("python -m spacy download en_core_web_sm")
 
 # import en_core_web_sm
 # nlp = en_core_web_sm.load()
