@@ -36,7 +36,7 @@ os.system("python -m spacy download en_core_web_sm")
 # import en_core_web_sm
 # nlp = en_core_web_sm.load()
 
-nlp = spacy.load("en_core_web_sm")
+#nlp = spacy.load("en_core_web_sm")
 
 groq_api = "API"
 llm_groq = ChatGroq(temperature=0, model="llama3-70b-8192", api_key=groq_api)
@@ -302,7 +302,8 @@ def rag(query, k=5):
     """
     Your original RAG pipeline, with Yelp, Wikipedia, FAISS retrieval, etc.
     """
-    nouns = extract_nouns(query)
+    # nouns = extract_nouns(query)
+    nouns = []
 
     food, location, wikiterm, cat1, cat2, timeword = get_most_relevant_term(query, nouns)
     yelpdata = []
