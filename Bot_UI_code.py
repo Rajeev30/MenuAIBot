@@ -1,7 +1,6 @@
 import streamlit as st
 from streamlit_lottie import st_lottie
-import Bot_code
-chain = Bot_code.build_conversational_chain()
+from Bot_code import build_conversational_chain
 
 
 st.set_page_config(page_title="RAG Chatbot", layout="wide")
