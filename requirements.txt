@@ -3,7 +3,7 @@ streamlit-lottie
 pandas
 numpy
 requests
-wikipedia-api
+wikipedia
 faiss-cpu
 sentence-transformers
 scikit-learn
