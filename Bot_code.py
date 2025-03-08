@@ -1,5 +1,5 @@
 import os
-import spacy
+#import spacy
 import pandas as pd
 import numpy as np
 import requests
