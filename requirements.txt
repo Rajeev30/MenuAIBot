@@ -10,5 +10,6 @@ scikit-learn
 spacy
 langchain
 langchain-groq
-google-generativeai
+google
+google.genai
 pydantic
