@@ -1,0 +1,14 @@
+streamlit
+streamlit-lottie
+pandas
+numpy
+requests
+wikipedia-api
+faiss-cpu
+sentence-transformers
+scikit-learn
+spacy
+langchain
+langchain-groq
+google-generativeai
+pydantic
