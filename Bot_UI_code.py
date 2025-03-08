@@ -3,7 +3,7 @@ from streamlit_lottie import st_lottie
 from Bot_code import build_conversational_chain
 
 
-st.set_page_config(page_title="RAG Chatbot", layout="wide")
+st.set_page_config(page_title="MenuData Chatbot", layout="wide")
 st.title("MenuData Chatbot")
 
 if "chain" not in st.session_state:
