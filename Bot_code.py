@@ -1,5 +1,4 @@
 import os
-#import spacy
 import pandas as pd
 import numpy as np
 import requests
@@ -23,31 +22,18 @@ GENIE_API_KEY = os.getenv("GENIE_API_KEY")
 OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
 YELP_API_KEY = os.getenv("YELP_API_KEY")
 GROQ_API_KEY = os.getenv("GROQ_API_KEY")
-# os.environ["GENIE_API_KEY"] = "APIkey"
-# os.environ["OPENAI_API_KEY"] = "APIkey"
+
 client = genai.Client(api_key=os.environ["GENIE_API_KEY"])
 
-# YELP_API_KEY = "APIkey"
 BASE_URL = "https://api.yelp.com/v3"
 
 HEADERS = {
     "Authorization": f"Bearer {YELP_API_KEY}",
     "Content-Type": "application/json"
 }
-#os.system("pip install --upgrade pip")
-#os.system("python -m spacy download en_core_web_sm")
 
-# import en_core_web_sm
-# nlp = en_core_web_sm.load()
-
-#nlp = spacy.load("en_core_web_sm")
-
-# groq_api = "API"
 llm_groq = ChatGroq(temperature=0, model="llama3-70b-8192", api_key=GROQ_API_KEY)
 
-# csv_file_path = "/Sample_Ingredients_File.csv"
-# df_excel = pd.read_excel("/Sample_Ingredients_File.xlsx")
-# df_excel.to_csv(csv_file_path, index=False)
 df_excel = pd.read_csv("Sample_Ingredients_File.csv")
 
 model = SentenceTransformer("paraphrase-MiniLM-L6-v2")
@@ -423,7 +409,7 @@ def build_conversational_chain():
 
         \nThis is the query: {question}
 
-        Read the query and answer it based on the data you have above. Check your answer twice. You have the data above, don't forget. If there is no relevant data available, politely say that the data isn't sufficient.
+        Read the query and answer it based on the data you have above. Check your answer twice. You have the data above, don't forget. If there is no relevant data available, answer what you know about it.
             """
         )
 
