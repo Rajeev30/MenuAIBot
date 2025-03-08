@@ -33,10 +33,10 @@ HEADERS = {
 os.system("pip install --upgrade pip")
 os.system("python -m spacy download en_core_web_sm")
 
-import en_core_web_sm
-nlp = en_core_web_sm.load()
+# import en_core_web_sm
+# nlp = en_core_web_sm.load()
 
-#nlp = spacy.load("en_core_web_sm")
+nlp = spacy.load("en_core_web_sm")
 
 groq_api = "API"
 llm_groq = ChatGroq(temperature=0, model="llama3-70b-8192", api_key=groq_api)
